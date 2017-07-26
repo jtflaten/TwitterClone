@@ -11,9 +11,15 @@ import LBTAComponents
 class HomeDatasourceController: DatasourceController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupNavigationBarItems()
        
         let homeDatasource = HomeDatasource()
         self.datasource = homeDatasource
+    }
+    
+    private func setupNavigationBarItems() {
+        print("setupNav called")
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -23,7 +29,6 @@ class HomeDatasourceController: DatasourceController {
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
        
         if let user = self.datasource?.item(indexPath) as? User{
-            //user.bioText
             let approximatedWidthOfTextView = view.frame.width - 12 - 50 - 12 - 2
             let size = CGSize(width: approximatedWidthOfTextView, height: 1000)
             let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 15)]
