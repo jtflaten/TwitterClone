@@ -16,7 +16,14 @@ class HomeDatasource: Datasource {
         return [riryUser, vindaUser]
     }()
     
-    // let words = ["user1", "user2", "user3"]
+    let tweets: [Tweet] = {
+        let riryUser = User(name: "Chef", username: "@chefriry", bioText: "I was a cook on the ship, we were attacked. I thought i died.", profileImage: #imageLiteral(resourceName: "profile_image"))
+        
+        let tweet = Tweet(user: riryUser, message: "i'v decided to focus on using prayers and a large hammer to do my work on the island. the hammer is haevy, but i want to stay quick, i dont like getting hurt")
+        
+        let tweet2 = Tweet(user: riryUser, message: "I haven't seen a kitchen in a long time. i probably won't be needing my kitchen clothes or my iron pot. I've taken to wearing the apant's of an assassin and the shirt of a queen.")
+        return[tweet, tweet2]
+    }()
     
     override func headerClasses() -> [DatasourceCell.Type]? {
         return[UserHeader.self]
@@ -27,14 +34,25 @@ class HomeDatasource: Datasource {
     }
     
     override func cellClasses() -> [DatasourceCell.Type] {
-        return [UserCell.self]
-    }
-    
-    override func numberOfItems(_ section: Int) -> Int {
-        return users.count
+        return [UserCell.self, TweetCell.self]
     }
     
     override func item(_ indexPath: IndexPath) -> Any? {
+        if indexPath.section == 1 {
+            return tweets[indexPath.item]
+        }
         return users[indexPath.item]
     }
+    
+    override func numberOfSections() -> Int {
+        return 2
+    }
+    
+    override func numberOfItems(_ section: Int) -> Int {
+        if section == 1 {
+            return tweets.count
+        }
+        return users.count
+    }
+    
 }
