@@ -40,20 +40,17 @@ class TweetCell: DatasourceCell {
         
         addSubview(profileImageView)
         addSubview(messageTextView)
-//        addSubview(nameLabel)
-//        addSubview(usernameLabel)
-//        addSubview(followButton)
+       // addSubview(replyButton)
+        setupBottomButtons()
+
         
         profileImageView.anchor(self.topAnchor, left: self.leftAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 12, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 50)
         
         messageTextView.anchor(topAnchor, left: profileImageView.rightAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 4, leftConstant: 4, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-//        nameLabel.anchor(profileImageView.topAnchor,left: profileImageView.rightAnchor, bottom: nil, right: followButton.leftAnchor, topConstant: 0, leftConstant: 4, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 20)
-//        
-//        
-//        usernameLabel.anchor(nameLabel.bottomAnchor, left: nameLabel.leftAnchor, bottom: nil, right: nameLabel.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 20)
-//        
-//        followButton.anchor(nameLabel.topAnchor, left: nil, bottom: nil, right: self.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 12, widthConstant: 120, heightConstant: 34)
+       // replyButton.anchor(nil, left: messageTextView.leftAnchor, bottom: self.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 20, heightConstant: 20)
+        
+
 
         backgroundColor = .white
         
@@ -71,37 +68,67 @@ class TweetCell: DatasourceCell {
     let messageTextView: UITextView = {
         let tv = UITextView()
         tv.text = "sample TEXT for tor the MESSAge text view and lets have it go around a little bit"
+        tv.backgroundColor = .clear
         return tv
     }()
     
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "21 Speed"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        return label
-    }()
-    
-    let usernameLabel: UILabel = {
-        let usernameLabel = UILabel()
-        usernameLabel.text = "@badassbike"
-        usernameLabel.font = UIFont.systemFont(ofSize: 14)
-        usernameLabel.textColor = UIColor(r: 130, g: 130, b: 130)
-        return usernameLabel
-    }()
-    let followButton: UIButton = {
-        let button = UIButton()
-        
-        button.layer.cornerRadius = 5
-        button.layer.borderColor = twitterBlue.cgColor
-        button.layer.borderWidth = 1
-        button.setTitle("Follow", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.setTitleColor(twitterBlue, for: .normal)
-        button.setImage(#imageLiteral(resourceName: "GitHub-Mark-32px"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFit
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 0)
+    let replyButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "reply"), for: .normal)
+        button.tintColor = UIColor(r: 230, g: 230, b: 230)
+        button.backgroundColor = .clear
         return button
-    }()
+    } ()
     
-
+    let retweetButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "retweet"), for: .normal)
+        button.tintColor = UIColor(r: 230, g: 230, b: 230)
+        button.backgroundColor = .clear
+        return button
+    } ()
+    
+    let likeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "like"), for: .normal)
+        button.tintColor = UIColor(r: 230, g: 230, b: 230)
+        button.backgroundColor = .clear
+        return button
+    } ()
+    
+    let messageButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "message"), for: .normal)
+        button.tintColor = UIColor(r: 230, g: 230, b: 230)
+        //button.backgroundColor = .clear
+        return button
+    } ()
+    
+    fileprivate func setupBottomButtons(){
+       
+        
+        let replyButtonContainerView = UIView()
+        let retweetButtonContainerView = UIView()
+        let likeButtonContainerView = UIView()
+        let messageButtonContainerView = UIView()
+        
+        
+        let buttonStackView = UIStackView(arrangedSubviews: [replyButtonContainerView, retweetButtonContainerView, likeButtonContainerView, messageButtonContainerView])
+        buttonStackView.axis = .horizontal
+        buttonStackView.distribution = .fillEqually
+       // buttonStackView.backgroundColor = .clear
+        
+        addSubview(buttonStackView)
+        addSubview(replyButton)
+        addSubview(retweetButton)
+        addSubview(likeButton)
+        addSubview(messageButton)
+        
+        
+        buttonStackView.anchor(nil, left: messageTextView.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 20)
+        replyButton.anchor(replyButtonContainerView.topAnchor, left: replyButtonContainerView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 20, heightConstant: 20)
+        retweetButton.anchor(retweetButtonContainerView.topAnchor, left: retweetButtonContainerView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 20, heightConstant: 20)
+        likeButton.anchor(likeButtonContainerView.topAnchor, left: likeButtonContainerView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 20, heightConstant: 20)
+        messageButton.anchor(messageButtonContainerView.topAnchor, left: messageButtonContainerView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 20, heightConstant: 20)
+    }
 }

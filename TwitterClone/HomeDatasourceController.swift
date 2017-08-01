@@ -20,7 +20,9 @@ class HomeDatasourceController: DatasourceController {
         self.datasource = homeDatasource
     }
     
-   
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        collectionViewLayout.invalidateLayout()
+    }
     
     
     
