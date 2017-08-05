@@ -7,14 +7,28 @@
 //
 
 import LBTAComponents
+import TRON
+import SwiftyJSON
 
-class HomeDatasource: Datasource {
+class HomeDatasource: Datasource, JSONDecodable {
+ 
+    let users: [User]
     
-    let users: [User] = {
-        let riryUser = User(name: "Chef", username: "@chefriry", bioText: "I was a cook on the ship, we were attacked. I thought i died. yabaDaba daboatoeofsj asdfij fjdsjb fdjk fdsajkkjhdf  saa", profileImage: #imageLiteral(resourceName: "profile_image"))
-        let vindaUser = User(name: "Vinda", username: "@avindaknight", bioText: "I am a very strong knight. be careful trying to fight mea asdfgjhagf asdhgfweg dsfhgjad hsadfikjh weiuh sdfb sad fgiucu asdfjhue jdshafkjh dakld  dsad  sda hsdad hdsasd kjsad sad sasd sad saad sad kad", profileImage: #imageLiteral(resourceName: "vinda_profile"))
-        return [riryUser, vindaUser]
-    }()
+    required init(json: JSON) throws {
+        print("now ready to parse json \n", json)
+        var users = [User]()
+        let array = json["users"].array
+        for userJson in array! {
+            let name = userJson["name"].stringValue
+            let username = userJson["username"].stringValue
+            let bio = userJson["bio"].stringValue
+            
+            let user = User(name: name, username: username, bioText: bio, profileImage: UIImage())
+            users.append(user)
+        }
+        self.users = users
+    }
+
     
     let tweets: [Tweet] = {
         let riryUser = User(name: "Chef", username: "@chefriry", bioText: "I was a cook on the ship, we were attacked. I thought i died.", profileImage: #imageLiteral(resourceName: "profile_image"))
