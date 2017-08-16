@@ -20,7 +20,7 @@ class HomeDatasourceController: DatasourceController {
         
         Service.sharedInstance.fetchHomeFeed{ (homeDataSource) in
             self.datasource = homeDataSource
-            print ("Done with fetch. this is completion handler")
+           
             
         }
        

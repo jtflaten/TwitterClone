@@ -25,7 +25,7 @@ struct Service {
         
         request.perform(withSuccess:  { (homeDataSource) in
             
-            print("Succesfully fetched JSON object")
+           
             completion(homeDataSource)
             
         }) { (err) in
