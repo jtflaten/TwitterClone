@@ -11,14 +11,34 @@ import TRON
 import SwiftyJSON
 
 class HomeDatasourceController: DatasourceController {
+   
+    let errorMessageLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Our Apologies, something's gone wrong. Please try again later."
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.isHidden = true
+
+        return label
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addSubview(errorMessageLabel)
+        errorMessageLabel.fillSuperview()   
         
         collectionView?.backgroundColor = UIColor(r: 232, g: 236, b: 241)
         
         setupNavigationBar()
         
-        Service.sharedInstance.fetchHomeFeed{ (homeDataSource) in
+        Service.sharedInstance.fetchHomeFeed{ (homeDataSource, err) in
+            if let err = err {
+                self.errorMessageLabel.isHidden = false
+                print("HomeDataSourceController error fetching json: ", err)
+                return
+            }
             self.datasource = homeDataSource
            
             

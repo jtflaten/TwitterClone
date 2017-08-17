@@ -18,11 +18,13 @@ class HomeDatasource: Datasource, JSONDecodable {
     required init(json: JSON) throws {
         
 
-        let userJsonArray = json["users"].array
-        self.users = userJsonArray!.map({return User(json: $0)})
-
-        let tweetsJsonArray = json["tweets"].array
-        self.tweets = tweetsJsonArray!.map({return Tweet(json: $0)})
+        guard let userJsonArray = json["users"].array, let tweetsJsonArray = json["tweets"].array else {
+            throw NSError(domain: "com.letsbuildthatapp", code: 1, userInfo: [NSLocalizedDescriptionKey: "one of the json dictionarys does not parse to a valid object"])
+        }
+       
+        
+        self.users = userJsonArray.map({return User(json: $0)})
+        self.tweets = tweetsJsonArray.map({return Tweet(json: $0)})
 
       
     }
