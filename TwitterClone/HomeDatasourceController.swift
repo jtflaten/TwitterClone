@@ -61,13 +61,23 @@ class HomeDatasourceController: DatasourceController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-       
-        if let user = self.datasource?.item(indexPath) as? User{
-            let approximatedWidthOfTextView = view.frame.width - 12 - 50 - 12 - 2
-            let size = CGSize(width: approximatedWidthOfTextView, height: 1000)
-            let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 15)]
-            let estimatedFrame = NSString(string: user.bioText).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-            return CGSize(width: view.frame.width, height: estimatedFrame.height + 66)
+        if indexPath.section == 0 {
+            if let user = self.datasource?.item(indexPath) as? User{
+                let approximatedWidthOfTextView = view.frame.width - 12 - 50 - 12 - 2
+                let size = CGSize(width: approximatedWidthOfTextView, height: 1000)
+                let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 15)]
+                let estimatedFrame = NSString(string: user.bioText).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                return CGSize(width: view.frame.width, height: estimatedFrame.height + 66)
+            }
+        } else if indexPath.section == 1 {
+            guard let tweet = self.datasource?.item(indexPath) as? Tweet else
+            { return .zero }
+                let approximatedWidthOfTextView = view.frame.width - 12 - 50 - 12 - 2
+                let size = CGSize(width: approximatedWidthOfTextView, height: 1000)
+                let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 15)]
+                let estimatedFrame = NSString(string: tweet.message).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+                return CGSize(width: view.frame.width, height: estimatedFrame.height + 74)
+            
         }
         
         return CGSize(width: view.frame.width, height: 200)

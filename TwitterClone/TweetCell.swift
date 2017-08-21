@@ -23,11 +23,12 @@ class TweetCell: DatasourceCell {
             attributedText.append(NSMutableAttributedString(string: tweet.message, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 15)]))
             
             let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 4
+            paragraphStyle.lineSpacing = 1
             let range = NSMakeRange(0, attributedText.string.characters.count)
             attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
             
             messageTextView.attributedText = attributedText
+            profileImageView.loadImage(urlString: tweet.user.profileImageUrl)
         }
     }
     
@@ -56,10 +57,10 @@ class TweetCell: DatasourceCell {
         
     }
     
-    let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .red
-        imageView.image = #imageLiteral(resourceName: "profile_image")
+    let profileImageView: CachedImageView = {
+        let imageView = CachedImageView()
+        
+        // imageView.image = #imageLiteral(resourceName: "profile_image")
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
         return imageView
